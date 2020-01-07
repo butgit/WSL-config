@@ -1,5 +1,5 @@
 # WSL as a Development Environment 
-This is guide is intended for [CS 4400](https://www.eng.utah.edu/~cs4400/) students at the [UofU](http://www.utah.edu/)
+~~This is guide is intended for [CS 4400](https://www.eng.utah.edu/~cs4400/) students at the [UofU](http://www.utah.edu/)~~
 
 The following is a series of steps for setting up a fresh installation of [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) as a development environment for Python, Python 3, Node, Ruby, C, C++, Objective-C, Objective-C++, Javascript etc.
 
@@ -51,7 +51,16 @@ Installing oh-my-zsh:
 Let's install oh-my-zsh using `curl`:
 
     cd
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+Create Symbolic .zshrc:
+-------
+If you want to use the provided `.zshrc` file in the repository create a symbolic link in your `~` directory:
+
+    ln -s ~/.wslconfig/.zshrc  ~/.zshrc
+This didn't work for me. (File already exists.) Instead, I copy-pasted. 
+
+Make sure to read up on the installed bundles for Zsh in this `.zshrc` file. There are some interesting features e.g fuzzy command history mapped to `Ctrl+R` .
 
 Installing antigen:
 ------------------------
@@ -61,26 +70,25 @@ Let's install antigen using `curl`:
 
     cd
     curl -L git.io/antigen > antigen.zsh
+    mkdir .antigen
     mv antigen.zsh ./.antigen/
 
-Create Symbolic .zshrc:
--------
-If you want to use the provided `.zshrc` file in the repository create a symbolic link in your `~` directory:
-
-    ln -s ~/.wslconfig/.zshrc  ~/.zshrc
-
-Make sure to read up on the installed bundles for Zsh in this `.zshrc` file. There are some interesting features e.g fuzzy command history mapped to `Ctrl+R` .
 
 Set Zsh as Default Shell:
 -------------------------
 In order to set Zsh as our default shell add the following snippet to you `.bashrc` file located in `~` directory:
-
+(I didn't need this because zsh set itself as the default shell.)
     # Launch Zsh
     if [ -t 1 ]; then
     exec zsh
     fi
 
 Finally restart your terminal and wait for antigen to install all plugins. 
+If you encounter "zsh compinit: insecure directories, run compaudit for list" press [n] and run
+
+    cd ~
+    compaudit | xargs chown -R "$(whoami)"
+    compaudit | xargs chmod -R go-w
 
 Vim Installation:
 =================
@@ -93,19 +101,14 @@ The build-essentials is a reference for all the packages needed to compile a deb
 
 CMake is an extensible, open-source system that manages the build process in an operating system and in a compiler-independent manner. 
 
-    sudo apt-get install build-essential cmake
-
-Installing Python & Python 3:
---------------
-Python is a widely used high-level programming language for general-purpose programming.
-
-    sudo apt-get install python-dev python3-dev
+    sudo apt install build-essential cmake curl
 
 
 Installing Node, NPM & Typescript:
 --------------
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
 
+THIS IS OUTDATED
     curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
     sudo apt-get install -y nodejs
 
@@ -117,29 +120,43 @@ Remove Vim:
 --------------
 Remove Vim from your WSL setup:
 
-    sudo apt-get remove vim vim-runtime gvim
+    sudo apt remove vim vim-runtime gvim
 
 Just to be safe remove these packages as well:
 
-    sudo apt-get remove vim-tiny vim-common vim-gui-common vim-nox
+    sudo apt remove vim-tiny vim-common vim-gui-common vim-nox
 
 Installing Dependencies for Vim & Ruby:
 --------------
 Compiling Vim from source is actually not that difficult. Install all the prerequisite libraries: 
 
-    sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion
+Required for vim:
+
+    sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
+libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
+
+python-dev is development package for Python 2. It is required for compilling some bundles. 
+
+Required for RVM:
+
+    sudo apt install bison libffi-dev libgdbm-dev libsqlite3-dev libyaml-dev sqlite3 libssl-dev
+
 
 Installing RVM and Ruby:
 --------------
 Ruby is a dynamic, open source programming language with a focus on simplicity and productivity. It is required for the `Command-T` plugin.
 
-You can check if you have Ruby installed by doing `ruby -v` and `rvm -v`.
+You can check if you have Ruby installed by doing `ruby -v` and `rvm -v`. 
+Don't forget the last line. VERSION is the number you get from the command 'ruby -v'.
 If you get a message saying *The program 'ruby' can be found in the following packages*, you need to install Ruby and rvm.
 
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
     curl -L https://get.rvm.io | bash -s stable --ruby
     rvm reinstall VERSION -C --enable-shared
     
-Set .bashrc for rvm scripting:
+Set .zshrc for rvm scripting:
 
     source "$HOME/.rvm/scripts/rvm"
 
@@ -148,9 +165,23 @@ Installing Clang:
 --------------
 Clang is an open-source compiler that can compile C/C++/Objective-C/Objective-C++. The `libclang` library it provides is used to power the YCM semantic completion engine for those languages.
 
+The following is originally written in this post: 
+
     sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-VERSION  main"
     sudo apt-get update
     sudo apt-get install clang-VERSION  lldb-VERSION 
+
+However, I followed this:
+    
+    sudo apt install xz-utils
+    curl -SL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz | tar -xJC .
+    mv clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04 clang_9.0.0
+    sudo mv clang_9.0.0 /usr/local
+
+Add these to .bashrc or .zshrc:
+
+    export PATH=/usr/local/clang_9.0.0/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/clang_9.0.0/lib:$LD_LIBRARY_PATH
 
 Installing Checkinstall:
 --------------
@@ -160,10 +191,13 @@ If you want to be able to easily uninstall vim use `checkinstall`.
 
     sudo apt-get install checkinstall
 
+
+
 Compiling Vim:
 --------------
 Once everything is installed, getting the source is easy. 
 **Note**: If you are using Python, your config directory might have a machine-specific name (e.g. config-3.5m-x86_64-linux-gnu). Check in `/usr/lib/python[2/3/3.5]` to find yours, and change the `python-config-dir` and/or `python3-config-dir` arguments accordingly.
+
 
     cd ~
     git clone https://github.com/vim/vim.git
@@ -171,25 +205,32 @@ Once everything is installed, getting the source is easy.
     ./configure --with-features=huge \
                 --enable-multibyte \
                 --enable-rubyinterp=yes \
-                --enable-pythoninterp=yes \
-                --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+                --enable-python3interp=yes \
+                --with-python3-config-dir=$(python3-config --configdir) \
                 --enable-perlinterp=yes \
                 --enable-luainterp=yes \
-                --enable-gui=gtk2 --enable-cscope --prefix=/usr
+                --enable-gui=gtk2 \
+                --enable-cscope \
+                --prefix=/usr/local
 
 Make Vim
 
-    make VIMRUNTIMEDIR=/usr/share/vim/vim80
+    make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+
 And install:
 
     cd ~/vim
-	sudo checkinstall
-	
+    sudo checkinstall
+
+[1^]
+
 Setup Vundle:
 --------------
 Vundle is a plugin manager for Vim. Clone the [repository](https://github.com/VundleVim/Vundle.vim) into the appropriate `.vim` bundle folder.
 
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+
 
 Vanilla .vimrc:
 ---------------
@@ -323,10 +364,10 @@ Setting Vim as Default Editor:
 
 Set Vim as your default editor with `update-alternatives`.
 
-    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
-    sudo update-alternatives --set editor /usr/bin/vim
-    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
-    sudo update-alternatives --set vi /usr/bin/vim
+    sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
+    sudo update-alternatives --set editor /usr/local/bin/vim
+    sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
+    sudo update-alternatives --set vi /usr/local/bin/vim
 
 Create Symbolic .vimrc:
 -------
@@ -338,16 +379,24 @@ To install from command line: `vim +PluginInstall +qall`
 
 Make sure to read up on the installed bundles for Vim in this `.vimrc` file.
 
+
+
 Resources:
 ----------
 Below is a list of original resources used to compile the steps above.
 
  - [Compile Vim from Source](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
- - [Install Vim with Ruby Support and Command-t Plugin on Ubuntu](http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu)
+ ~~- [Install Vim with Ruby Support and Command-t Plugin on Ubuntu](http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu)~~ dead link
  - [Installing Node.js via package manager](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
  - [YouCompleteMe Installation](https://github.com/Valloric/YouCompleteMe#ubuntu-linux-x64)
  - [Vundle Installation](https://github.com/VundleVim/Vundle.vim#quick-start)
  - [Command-T Docs](https://github.com/wincent/command-t/blob/master/doc/command-t.txt)
+ - [Clang installation](https://solarianprogrammer.com/2017/12/13/linux-wsl-install-clang-libcpp-compile-cpp-17-programs/)
+ - 
 
+Footnotes:
+----------
+[^1]: You can remove it from your system anytime using:
 
+    dpkg -r vim
 
