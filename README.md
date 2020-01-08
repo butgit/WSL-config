@@ -1,5 +1,5 @@
 # WSL as a Development Environment 
-~~This is guide is intended for [CS 4400](https://www.eng.utah.edu/~cs4400/) students at the [UofU](http://www.utah.edu/)~~
+This is my modified version of hsab's instruction on setting up a vim as IDE in wsl environment. As it was written 2 years ago, some packages are either no longer maintained or, in my opinion, there are better ways to install some packages. So here is my trial to install vim in wsl environment. 
 
 The following is a series of steps for setting up a fresh installation of [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) as a development environment for Python, Python 3, Node, Ruby, C, C++, Objective-C, Objective-C++, Javascript etc.
 
