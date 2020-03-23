@@ -84,7 +84,7 @@ In order to set Zsh as our default shell add the following snippet to you `.bash
     fi
 
 Finally restart your terminal and wait for antigen to install all plugins. 
-If you encounter "zsh compinit: insecure directories, run compaudit for list" press [n] and run
+*If you encounter "zsh compinit: insecure directories, run compaudit for list" press [n] and run*
 
     cd ~
     compaudit | xargs chown -R "$(whoami)"
