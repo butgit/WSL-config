@@ -29,11 +29,11 @@ Now update and upgrade everything to make sure all of our installed packages are
 
 Console Info:
 =================
-<del>By the end of **Zsh Installation** section your terminal should look like this:
+By the end of **Zsh Installation** section your terminal should look like this:
 
 ![enter image description here](http://i.imgur.com/ALqC0Ad.png)
 
-In this screenshot I'm using [cmder](http://cmder.net/) with [wsltty](https://github.com/mintty/wsltty) using `london-tube` color scheme.
+<del>In this screenshot I'm using [cmder](http://cmder.net/) with [wsltty](https://github.com/mintty/wsltty) using `london-tube` color scheme.
 
 If you decide to use the same console setup, you can copy `mintty` folder to `%appdata%` to have access to the themes. I have also included my `ConEmu.xml` config file if you decide to use it.
 
