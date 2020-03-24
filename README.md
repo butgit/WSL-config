@@ -29,7 +29,7 @@ Now update and upgrade everything to make sure all of our installed packages are
 
 Console Info:
 =================
-<del>By the end of **Zsh Installation** section your terminal should look like this:~~
+<del>By the end of **Zsh Installation** section your terminal should look like this:
 
 ![enter image description here](http://i.imgur.com/ALqC0Ad.png)
 
