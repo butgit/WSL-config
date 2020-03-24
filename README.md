@@ -39,7 +39,7 @@ By the end of **Zsh Installation** section your terminal should look like this:
 
 ~~For correct encoding of special characters, you need to install [patched fonts for Powerline](https://github.com/powerline/fonts). Make sure to install these fonts as you would normally on Windows. Even though `./install.sh` is provided there is no point in running this script as the GUI is provided through the Windows OS.~~
 
-I'm not big on a fancy terminal and a bunch of powerline fonts. I simply opted for Windows Terminal (Preview) and Cascadia Code for powerline. Just install [cascadia code](https://github.com/microsoft/cascadia-code/releases) and add "fontFace":  "Cascadia Code PL" in the setting.json file of Windows Terminal.
+I'm not big on a fancy terminal and a bunch of powerline fonts. I simply opted for Windows Terminal (Preview) and Cascadia Code for powerline. Just install [cascadia code](https://github.com/microsoft/cascadia-code/releases) and put "fontFace":  "Cascadia Code PL" in the setting.json file of Windows Terminal.
 
 Zsh Installation:
 =================
@@ -50,6 +50,7 @@ By the end of this section we will have installed [zsh](http://www.zsh.org/), [o
 Installing oh-my-zsh:
 ------------------------
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) is an open source, community-driven framework for managing your Zsh configuration.
+
 Let's install oh-my-zsh using `curl`:
 
     cd
@@ -59,8 +60,13 @@ Create Symbolic .zshrc:
 -------
 If you want to use the provided `.zshrc` file in the repository create a symbolic link in your `~` directory:
 
-    ln -s ~/.wslconfig/.zshrc  ~/.zshrc
-This didn't work for me. (File already exists.) Instead, I copy-pasted. 
+~~    ln -s ~/.wslconfig/.zshrc  ~/.zshrc ~~
+
+This didn't work for me. (File already exists.) Instead, I ran the following:
+
+    cp -s ~/.wslconfig/.zshrc  ~/.zshrc
+
+And I changed the value of DEFAULT_USER.
 
 Make sure to read up on the installed bundles for Zsh in this `.zshrc` file. There are some interesting features e.g fuzzy command history mapped to `Ctrl+R` .
 
