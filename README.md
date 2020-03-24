@@ -33,11 +33,11 @@ By the end of **Zsh Installation** section your terminal should look like this:
 
 ![enter image description here](http://i.imgur.com/ALqC0Ad.png)
 
-<del><p>In this screenshot I'm using [cmder](http://cmder.net/) with [wsltty](https://github.com/mintty/wsltty) using `london-tube` color scheme.</p>
+~~In this screenshot I'm using [cmder](http://cmder.net/) with [wsltty](https://github.com/mintty/wsltty) using `london-tube` color scheme.
 
-<p>If you decide to use the same console setup, you can copy `mintty` folder to `%appdata%` to have access to the themes. I have also included my `ConEmu.xml` config file if you decide to use it.</p>
+~~If you decide to use the same console setup, you can copy `mintty` folder to `%appdata%` to have access to the themes. I have also included my `ConEmu.xml` config file if you decide to use it.
 
-<p>For correct encoding of special characters, you need to install [patched fonts for Powerline](https://github.com/powerline/fonts). Make sure to install these fonts as you would normally on Windows. Even though `./install.sh` is provided there is no point in running this script as the GUI is provided through the Windows OS.</p></del>
+~~For correct encoding of special characters, you need to install [patched fonts for Powerline](https://github.com/powerline/fonts). Make sure to install these fonts as you would normally on Windows. Even though `./install.sh` is provided there is no point in running this script as the GUI is provided through the Windows OS.
 
 I'm not big on a fancy terminal and a bunch of powerline fonts. I simply opted for Windows Terminal (Preview) and Cascadia Code for powerline. Just install [cascadia code](https://github.com/microsoft/cascadia-code/releases) and add "fontFace":  "Cascadia Code PL" in the setting.json file of Windows Terminal.
 
