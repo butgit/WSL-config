@@ -1,15 +1,15 @@
 # WSL as a Development Environment 
 This is my modified version of hsab's instruction on setting up a vim as IDE in wsl environment. 
 
-The following is a series of steps for setting up a fresh installation of [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) as a development environment for Python, Python 3, Node, Ruby, C, C++, Objective-C, Objective-C++, Javascript etc.
+The following is a tutorial for setting up [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) as a development environment for Python, Python 3, Node, Ruby, C, C++, Objective-C, Objective-C++, Javascript etc.
 
-The bread and butter of this step are [Zsh](http://www.zsh.org/) and [Vim](http://www.vim.org/) respectively. In fact the real power of development comes from versatility of vim in conjunction with other tools such as [tmux](https://tmux.github.io/) and different plugins. The purpose of this tutorial is to help you utilize Vim as an IDE. 
+The core components are [Zsh](http://www.zsh.org/) and [Vim](http://www.vim.org/). Vim with other tools such as [tmux](https://tmux.github.io/) is a powerful development tool.  
 
 For the Zsh setup, I will be using [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) and [antigen](https://github.com/zsh-users/antigen) as my bundle manager. 
 
-We will be removing the default Vim package and compile our own from source to harness the power of plugins such as [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) and [Command-T](https://github.com/wincent/command-t).
+We will be removing the default Vim package and compile our own from source to use plugins such as [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) and [Command-T](https://github.com/wincent/command-t).
 
-This guide assumes that you have just completed a [fresh installation](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide) of WSL and continues where the linked guide left off. 
+This guide assumes that you have just completed a [fresh installation](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide) of WSL. 
 
 This repository provides starting `.vimrc` and `.zshrc` config files. Everything is commented for clarity. Please research each plugin to see its functionality and use.
 
@@ -29,7 +29,7 @@ Now update and upgrade everything to make sure all of our installed packages are
 
 Console Info:
 =================
-By the end of **Zsh Installation** section your terminal should look like this:
+<del>By the end of **Zsh Installation** section your terminal should look like this:~~
 
 ![enter image description here](http://i.imgur.com/ALqC0Ad.png)
 
@@ -37,7 +37,9 @@ In this screenshot I'm using [cmder](http://cmder.net/) with [wsltty](https://gi
 
 If you decide to use the same console setup, you can copy `mintty` folder to `%appdata%` to have access to the themes. I have also included my `ConEmu.xml` config file if you decide to use it.
 
-For correct encoding of special characters, you need to install [patched fonts for Powerline](https://github.com/powerline/fonts). Make sure to install these fonts as you would normally on Windows. Even though `./install.sh` is provided there is no point in running this script as the GUI is provided through the Windows OS.
+For correct encoding of special characters, you need to install [patched fonts for Powerline](https://github.com/powerline/fonts). Make sure to install these fonts as you would normally on Windows. Even though `./install.sh` is provided there is no point in running this script as the GUI is provided through the Windows OS.</del>
+
+I'm not big on a fancy terminal and a bunch of powerline fonts. I simply opted for Windows Terminal (Preview) and Cascadia Code for powerline. Just install [cascadia code](https://github.com/microsoft/cascadia-code/releases) and add "fontFace":  "Cascadia Code PL" in the setting.json file of Windows Terminal.
 
 Zsh Installation:
 =================
@@ -78,6 +80,7 @@ Set Zsh as Default Shell:
 -------------------------
 In order to set Zsh as our default shell add the following snippet to you `.bashrc` file located in `~` directory:
 (I didn't need this because zsh set itself as the default shell.)
+
     # Launch Zsh
     if [ -t 1 ]; then
     exec zsh
