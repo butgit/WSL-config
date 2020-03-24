@@ -64,7 +64,7 @@ If you want to use the provided `.zshrc` file in the repository create a symboli
 
 This didn't work for me. (File already exists.) Instead, I ran the following:
 
-    cp -s ~/.wslconfig/.zshrc  ~/.zshrc
+    cp ~/.wslconfig/.zshrc  ~/.zshrc
 
 And I changed the value of DEFAULT_USER.
 
@@ -72,7 +72,7 @@ Make sure to read up on the installed bundles for Zsh in this `.zshrc` file. The
 
 Installing antigen:
 ------------------------
-[antigen](https://github.com/zsh-users/antigen) is a small set of functions that help you easily manage your Zsh plugins, called bundles. The concept is pretty much the same as bundles in a typical vim setup. Antigen is to zsh, what Vundle is to vim.
+[antigen](https://github.com/zsh-users/antigen) is a set of functions that help you manage your Zsh plugins, called bundles.
 
 Let's install antigen using `curl`:
 
@@ -117,7 +117,7 @@ Installing Node, NPM & Typescript:
 --------------
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
 
-THIS IS OUTDATED
+THIS IS OUTDATED because the latest Node verion is 8 something.
 
     curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
     sudo apt-get install -y nodejs
@@ -156,7 +156,7 @@ Required for RVM:
 
 Installing RVM and Ruby:
 --------------
-Ruby is a dynamic, open source programming language with a focus on simplicity and productivity. It is required for the `Command-T` plugin.
+Ruby is a dynamic, open source programming language. It is required for the `Command-T` plugin.
 
 You can check if you have Ruby installed by doing `ruby -v` and `rvm -v`. 
 Don't forget the last line. VERSION is the number you get from the command 'ruby -v'.
